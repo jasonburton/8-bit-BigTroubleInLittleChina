@@ -19,15 +19,18 @@ const ENEMY_STATS = {
   lightning: { hp: 90, dmg: 9, speed: 0.8, reach: 26, boss: true, title: 'LIGHTNING OF THE 3 STORMS' },
   rain:      { hp: 100, dmg: 9, speed: 0.75, reach: 28, boss: true, title: 'RAIN OF THE 3 STORMS' },
   thunder:   { hp: 120, dmg: 11, speed: 0.6, reach: 28, boss: true, title: 'THUNDER OF THE 3 STORMS' },
+  needles:   { hp: 55, dmg: 8, speed: 0.75, reach: 26, title: 'NEEDLES OF THE LORDS OF DEATH' },
   lopan_old: { hp: 40, dmg: 4, speed: 0.3, reach: 20, title: 'DAVID LO PAN' },
   lopan:     { hp: 170, dmg: 11, speed: 0.7, reach: 30, boss: true, title: 'LO PAN THE SORCERER' },
 };
+// Needles, leader of the Lords of Death: a tougher, recolored blade (see RECOLOR)
+ENEMIES.needles = { ...ENEMIES.blade, name: 'NEEDLES' };
 const WAVES = {
   street: [
     { x: 90,  spawn: ['thug', 'thug'] },
     { x: 380, spawn: ['thug', 'blade'] },
     { x: 680, spawn: ['blade', 'blade', 'thug'] },
-    { x: 980, spawn: ['lord', 'lord'] },
+    { x: 980, spawn: ['needles', 'lord', 'lord'] },
     { x: 1240, spawn: ['lightning'], boss: true },
   ],
   warehouse: [
@@ -319,6 +322,7 @@ function updateEnemy(e) {
 
 // ---------- per-stage enemy recolors ----------
 const RECOLOR = { // levelIdx -> type -> palette char map (skin/outline untouched)
+  0: { needles: { R: 'M', r: 'm' } }, // magenta bandana marks the gang leader
   1: { thug: { E: 'B', g: 'b' }, blade: { R: 'P', r: 'p' }, lord: { '1': 'm' } },
   2: { thug: { E: 'P', g: 'p' }, blade: { R: 'Y', r: 'y' }, lord: { '1': 'g' } },
   3: { thug: { E: 'R', g: 'r' }, blade: { R: 'c', r: 'b' }, lord: { '1': 'b' } },
@@ -782,7 +786,7 @@ function drawSelect() {
   octx.fillRect(28, 178, 200, 1); octx.fillRect(28, 211, 200, 1);
   octx.fillRect(28, 178, 1, 34); octx.fillRect(227, 178, 1, 34);
   drawText(octx, 'JACK  ALL BRAWN AND MOUTH', 40, 186, selIdx === 0 ? P['W'] : P['G']);
-  drawText(octx, 'WANG  MASTER OF KUNG FU', 40, 198, selIdx === 1 ? P['W'] : P['G']);
+  drawText(octx, 'WANG  DRAGON OF THE BLACK POOL', 40, 198, selIdx === 1 ? P['W'] : P['G']);
   if (pressed.ArrowLeft || pressed.ArrowRight || pressed.KeyA || pressed.KeyD) { selIdx = 1 - selIdx; Audio.sfx('select'); }
   if (pressed.Enter || pressed.KeyZ || pressed.Space) {
     heroKey = ['jack', 'wang'][selIdx];

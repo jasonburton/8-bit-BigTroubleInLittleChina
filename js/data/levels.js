@@ -20,7 +20,9 @@ const lcg = (seed) => {
 // blocky 3x5 letters (only what the signs need)
 const FONT = {
   A: ['010', '101', '111', '101', '101'],
+  B: ['110', '101', '110', '101', '110'],
   C: ['011', '100', '100', '100', '011'],
+  L: ['100', '100', '100', '100', '111'],
   D: ['110', '101', '101', '101', '110'],
   E: ['111', '100', '110', '100', '111'],
   G: ['011', '100', '101', '101', '011'],
@@ -511,6 +513,8 @@ export const LEVELS = [
                 px(c, P, i % 2 ? 'o' : 'W', mx - 2 + i * 6, 132, 2, 2);
               }
               text(c, P, si % 2 ? 'M' : 'R', si % 2 ? 'ARCADE' : 'DRAGON', mx + 7, 119, 2);
+              // Wang's restaurant: subtitle above the DRAGON marquee
+              if (!(si % 2)) text(c, P, 'x', 'BLACK POOL', mx + 10, 107, 1);
               signs.push([mx + 28, 'Y']);
               px(c, P, '0', x + 6, 136, bw - 30, 24);        // dark entry
               px(c, P, '1', x + 8, 138, bw - 34, 22);
